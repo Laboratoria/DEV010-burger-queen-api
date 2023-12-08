@@ -4,6 +4,7 @@ const authMiddleware = require('./middleware/auth');
 const errorHandler = require('./middleware/error');
 const routes = require('./routes');
 const pkg = require('./package.json');
+const connect = require('./connect');
 
 const { port, secret } = config;
 const app = express();
@@ -15,6 +16,8 @@ app.set('pkg', pkg);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(authMiddleware(secret));
+// Llamada a la función connect
+// connect();
 
 // Registrar rutas
 routes(app, (err) => {

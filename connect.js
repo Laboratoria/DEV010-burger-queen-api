@@ -1,54 +1,65 @@
-/* const config = require('./config');
 const { MongoClient } = require('mongodb');
+const config = require('./config');
+
 const { dbUrl } = config;
+let db;
 
 async function connect() {
   try {
     const client = new MongoClient(dbUrl);
     await client.connect();
-    const db = client.db('auth_post_login');
-    console.log('Conexión exitosa a la base de datos');
-    return db;
+    // const db = client.db('auth_post_login');
+    db = client.db('auth_post_login');
+    console.log('Successful connection to the database');
+    // return db;
   } catch (error) {
-    console.error('Error al conectar a la base de datos:', error);
+    console.error('Error connecting to the database:', error);
   }
 }
 
 connect();
 
-module.exports = { connect }; */
+// Función para obtener la instancia de la base de datos
+function getDb() {
+  if (!db) {
+    throw new Error('La conexión a la base de datos no está establecida.');
+  }
+  return db;
+}
 
-const { MongoClient } = require('mongodb');
+module.exports = { connect, getDb };
+
+/* const { MongoClient } = require('mongodb');
 const { dbUrl } = require('./config');
 
 async function connect() {
   try {
     const client = new MongoClient(dbUrl);
     await client.connect();
-    const db = client.db('auth');
+    const db = client.db('burger-queen');
     console.log('Successful connection to the database');
 
-    // Operaciones en la base de datos
-    const collection = db.collection('post/login');
+    // Estas son las operaciones en la base de datos
+    const collection = db.collection('users');
 
-    // Insertar un documento de prueba
+    // Insertamos un documento de prueba
     const result = await collection.insertOne({
-      _id: '655e6306c54fe7d18e1c989e',
-      email: 'alejandra@gmail.com',
-      password: '12345qwerty',
+      email: 'aleolalde@gmail.com',
+      password: '12345asdfg',
     });
     console.log(`Document inserted with ID: ${result.insertedId}`);
 
-    // Indicar que todas las operaciones se han completado con éxito antes de cerrar la conexión
+    // Indicamos que todas las operaciones se han completado con éxito antes de cerrar la conexión
     console.log('Operations completed');
 
-    // Cerrar la conexión
+    // Cerramos la conexión
     await client.close();
     console.log('Closed connection');
   } catch (error) {
-    console.error("Error connecting to the database:", error);
+    console.error('Error connecting to the database:', error);
   }
 }
 
-// Llamada a la función connect
-connect();
+// connect();
+
+module.exports = connect; */
